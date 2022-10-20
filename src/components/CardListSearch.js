@@ -60,23 +60,20 @@ const CardListSearch = () => {
 
     return (
         <div id="cardListSearch" className="container justify-content-center">
-            <select name="Category" htmlFor="Category" className="col">
-            <option value="">All categories...</option>
-            {
-                getCategoryNames(categoryList).map((cat) => 
-                (
-                    <option key={cat} value={cat}>{cat}</option>
-                ))
-            }
-            </select>
-
             <div className="row justify-content-center mb-3 pt-2">
                 <div className="col-3">
-                    <input type="text" name="searchText" className="form-control" placeholder="Search..." />
+                    <input type="text" name="searchText" className="form-control" placeholder="Search..." onChange={searchQuery}/>
                 </div>
-                <div className="col-1 text-left">
-                    <button type="button" className="btn btn-primary form-control" onClick={searchQuery}>Search</button>
-                </div>
+
+                <select name="Category" htmlFor="Category" className="col-3" onChange={searchQuery}>
+                    <option value="">All categories...</option>
+                    {
+                        getCategoryNames(categoryList).map((cat) => 
+                        (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))
+                    }
+                </select>
             </div>
             
             <div id="cardList" className="row">
