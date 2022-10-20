@@ -19,37 +19,25 @@ const CardListSearch = () => {
     }, [])
 
     const searchQuery = () => {
-        // const value = document.querySelector("[name='searchText']").value; // Element by Query Selector
-        const search = document.getElementsByName("searchText")[0].value;      // Element by Name
+        const search = document.getElementsByName("searchText")[0].value;
         const categoryId = getCategoryId(document.getElementsByName("Category")[0].value);
-        
-        setFiltered(allCards);
 
-        if (search !== "") 
+        setFiltered(allCards.filter((item) => 
         {
-            setFiltered(allCards.filter((item) => 
+            // if item category and selected category don't match
+            if (item.categoryId !== categoryId && categoryId !== undefined)
             {
-                return item.itemName.toLowerCase()
-                    .indexOf(search.toLowerCase()) !== -1;
-            }))
-        }
+                return false;
+            }
 
-        if (categoryId !== undefined)
-        {
-            setFiltered(filteredCards.filter((item) => 
+            // if item name doesn't contain the search
+            if (item.itemName.toLowerCase().indexOf(search.toLowerCase()) === -1)
             {
-                 return item.categoryId === categoryId; 
-            }))
-        }
-
-        console.log(`Search: ${search} || CategoryId: ${categoryId}`);
-        filteredCards.map((p) => (console.log(`ItemName: ${p.itemName} (${p.itemName.toLowerCase().indexOf(search.toLowerCase()) !== -1})|| ItemCategory: ${p.categoryId} (${p.categoryId === categoryId})`)))
-
-        if (search === "" && categoryId === undefined) 
-        {
-            console.log("RESET");
-            setFiltered(allCards) 
-        }
+                return false;
+            }
+            
+            return true;
+        }))
     }
 
     const getCategoryId = (categoryString) => {
@@ -71,16 +59,16 @@ const CardListSearch = () => {
     }
 
     return (
-        <div id="cardListSearch">
-        <select name="Category" htmlFor="Category" className="col">
-        <option value="">All categories...</option>
-        {
-            getCategoryNames(categoryList).map((cat) => 
-            (
-                <option key={cat} value={cat}>{cat}</option>
-            ))
-        }
-        </select>
+        <div id="cardListSearch" className="container justify-content-center">
+            <select name="Category" htmlFor="Category" className="col">
+            <option value="">All categories...</option>
+            {
+                getCategoryNames(categoryList).map((cat) => 
+                (
+                    <option key={cat} value={cat}>{cat}</option>
+                ))
+            }
+            </select>
 
             <div className="row justify-content-center mb-3 pt-2">
                 <div className="col-3">

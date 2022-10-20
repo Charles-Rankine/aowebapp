@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Card = ({ itemId, itemName, itemDescription, itemCost, itemImage }) => {    
     return (
         <div className="col-3 mb-2 px-2">
@@ -13,7 +15,7 @@ const Card = ({ itemId, itemName, itemDescription, itemCost, itemImage }) => {
                         <li className="list-group-item">Price: ${itemCost}</li>
 
                         <li className="list-group-item">
-                            <a href="https://www.google.com.au" className="btn btn-primary">Details</a>
+                            <Link to={'/Products/' + itemId} className='btn btn-primary'>Details</Link>
                         </li>
 
                         </ul>
